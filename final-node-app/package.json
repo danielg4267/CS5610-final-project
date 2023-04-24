@@ -1,0 +1,19 @@
+{
+	"type": "module",
+	"name": "final-node-app",
+	"version": "1.0.0",
+	"description": "Final Project, Node Server",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "Daniel Gonzalez",
+	"license": "ISC",
+	"dependencies": {
+		"axios": "^1.3.5",
+		"cors": "^2.8.5",
+		"express": "^4.18.2",
+		"express-session": "^1.17.3",
+		"mongoose": "^7.0.3"
+	}
+}
