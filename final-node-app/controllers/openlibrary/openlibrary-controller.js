@@ -65,7 +65,9 @@ const searchRecommended = async (req, res) => {
 
 const searchTrending = async (req, res) => {
 
-    const review = await reviewsDao.findRecentReview();
+    var review = [];
+    review = await reviewsDao.findRecentReview();
+
     if(!review.length > 0){
         res.json([])
         return;

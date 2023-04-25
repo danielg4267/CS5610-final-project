@@ -13,7 +13,7 @@ const register = async (req, res) => {
         return;
     }
     try{
-        console.log(req.body)
+        //console.log(req.body)
         const newUser = await usersDao
             .createUser(req.body);
         req.session["currentUser"] = newUser;
@@ -50,16 +50,20 @@ const profile = async (req, res) => {
 const findUserByID = async (req, res) => {
     const uid = req.params.uid;
     let user = null;
+    //validator.isMongoId()
     try{
         user = await usersDao.findUserByUid(uid)
         user = {_id: user._id,
-                username: user.username,
-                joinDate: user.joinDate,
-                profilePic: user.profilePic,
-                coverPic: user.coverPic,
-                bio: user.bio,
-                extendedBio: user.extendedBio
-                }
+            username: user.username,
+            joinDate: user.joinDate,
+            profilePic: user.profilePic,
+            coverPic: user.coverPic,
+            role: user.role,
+            bio: user.bio,
+            extendedBio: user.extendedBio,
+            isBuyer: user.isBuyer,
+            isAdmin: user.isAdmin
+        }
     }
     catch (e){
         res.sendStatus(404);
@@ -79,8 +83,11 @@ const findUserByUsername = async (req, res) => {
             joinDate: user.joinDate,
             profilePic: user.profilePic,
             coverPic: user.coverPic,
+            role: user.role,
             bio: user.bio,
-            extendedBio: user.extendedBio
+            extendedBio: user.extendedBio,
+            isBuyer: user.isBuyer,
+            isAdmin: user.isAdmin
         }
     }
     catch (e){
@@ -100,14 +107,12 @@ const updateUser = async(req, res) => {
     const currentUser = req.session["currentUser"];
 
     if(!currentUser){
-        res.sendStatus(404);
+        res.sendStatus(403);
         return;
     }
     const updatedInfo = req.body;
-    console.log(updatedInfo);
     try{
-        const response = await usersDao.updateUser(currentUser._id, updatedInfo)
-        const updatedUser = await usersDao.findUserByUid(currentUser._id);
+        const updatedUser = await usersDao.updateUser(currentUser._id, updatedInfo)
         req.session["currentUser"] = updatedUser;
         res.json(updatedUser);
     }
@@ -116,7 +121,44 @@ const updateUser = async(req, res) => {
     }
 }
 
+const updateUserRole = async (req, res) => {
+    //isAdmin, role, isBuyer
+    //check if role == admin to update isAdmin
+    const currentUser = req.session["currentUser"]
+    const uid = req.params.uid;
+    const toUpdate = req.body;
 
+    //updating privileges requires admin status
+    if(!currentUser || (currentUser._id !== uid && !currentUser.isAdmin)){
+        res.sendStatus(403);
+        return;
+    }
+    try{
+        const newUser = await usersDao.updateUser(uid, toUpdate);
+        const user = {_id: newUser._id,
+            username: newUser.username,
+            joinDate: newUser.joinDate,
+            profilePic: newUser.profilePic,
+            coverPic: newUser.coverPic,
+            role: newUser.role,
+            bio: newUser.bio,
+            extendedBio: newUser.extendedBio,
+            isBuyer: newUser.isBuyer,
+            isAdmin: newUser.isAdmin
+        }
+        res.json(user);
+    }
+    catch(e){
+        res.sendStatus(404);
+    }
+
+
+
+
+
+
+
+}
 
 export default (app) => {
     app.post("/api/users/register", register);
@@ -126,4 +168,6 @@ export default (app) => {
     app.post("/api/users/profile",  profile);
     app.post("/api/users/logout",   logout);
     app.put ("/api/users/update",          updateUser);
+    app.put ("/api/users/update/:uid",          updateUserRole);
+
 }

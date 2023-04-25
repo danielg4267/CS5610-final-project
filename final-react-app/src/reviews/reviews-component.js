@@ -23,9 +23,15 @@ const ReviewsComponent = ({id, isUserID}) => {
     }, [id])
 
     return(
-        <div className="list-group">
-            {reviews.map(review => <ReviewItemComponent review={review} isUserList={isUserID}/>)}
-        </div>
+        <>
+            {reviews && reviews.length > 0 ?
+                <div className="list-group">
+                    {reviews.map(review => <ReviewItemComponent review={review} isUserList={isUserID}/>)}
+                </div> :
+                <h5>No reviews yet!</h5>
+            }
+        </>
+
     )
 }
 

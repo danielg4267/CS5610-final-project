@@ -29,6 +29,8 @@ const EditProfileDetailsComponent = () => {
     const [profilePic, setProfilePic] = useState("/images/noProfPic.png");
     const [coverPic, setCoverPic] = useState("/images/noCoverPic.jpg");
 
+    const [buyer, setBuyer] = useState(true);
+
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -74,6 +76,22 @@ const EditProfileDetailsComponent = () => {
         }
     }
 
+    const updateProfilePic = (input) => {
+        console.log(input.split("\\"));
+        const address = input.split("\\")
+        const image = address[address.length-1];
+        const imagePath = "/images/" + image;
+        setProfilePic(imagePath);
+    }
+
+    const updateCoverPic = (input) => {
+        const address = input.split("\\")
+        const image = address[address.length-1];
+        const imagePath = "/images/" + image;
+        setCoverPic(imagePath);
+
+    }
+
     const submit = async () => {
         if(currentUser){
             updateUser();
@@ -95,11 +113,11 @@ const EditProfileDetailsComponent = () => {
                 bio: bio,
                 extendedBio: extendedBio,
                 profilePic: profilePic,
-                coverPic: coverPic
+                coverPic: coverPic,
+                isBuyer: buyer
             }
             const response = await dispatch(updateUserThunk(user))
             if (!response.payload) {
-                console.log(response);
             } else {
                 navigate("/profile");
             }
@@ -118,7 +136,8 @@ const EditProfileDetailsComponent = () => {
                 bio: bio,
                 extendedBio: extendedBio,
                 profilePic: profilePic,
-                coverPic: coverPic
+                coverPic: coverPic,
+                isBuyer: buyer
             }
             const response = await dispatch(registerThunk(user))
 
@@ -144,6 +163,7 @@ const EditProfileDetailsComponent = () => {
             setExtendedBio(currentUser.extendedBio);
             setProfilePic(currentUser.profilePic);
             setCoverPic(currentUser.coverPic);
+            setBuyer(currentUser.isBuyer);
         }
     }, [currentUser])
 
@@ -226,15 +246,17 @@ const EditProfileDetailsComponent = () => {
                     </div>
                     <div className="col-8 mb-3">
                         <label htmlFor="profilePic">Profile Picture</label><br/>
-                        <input type="file" onChange={(e) => setProfilePic(e.target.value)} className="form-control-file" id="profilePic"/>
+                        <input type="file" onChange={(e) => updateProfilePic(e.target.value)} className="form-control-file" id="profilePic"/>
                     </div>
                     <div className="col-8 mb-4">
                         <label htmlFor="coverPic">Banner Picture</label><br/>
-                        <input type="file" onChange={(e) => setCoverPic(e.target.value)} className="form-control-file" id="coverPic"/>
+                        <input type="file" onChange={(e) => updateCoverPic(e.target.value)} className="form-control-file" id="coverPic"/>
                     </div>
                 </div>
             </form>
             <button className="btn btn-outline-primary my-2 my-sm-0" onClick={() => submit()}>{currentUser ? "Update" : "Register"}</button>
+            <button className="btn btn-outline-danger ms-4" onClick={() => navigate("/profile")}>Cancel</button>
+
         </>
     )
 }

@@ -16,10 +16,10 @@ const resultBasic = ({work}) => {
         <Link to={`/details${work.key}`} className="text-decoration-none text-dark">
             <div className="list-group-item">
                 <div className="row m-2">
-                    <div className="col-4">
-                        <img src={img_src}/>
+                    <div className="col-sm-5 col-md-6 col-lg-7 col-xl-6 col-xxl-5">
+                        <img className="rounded" src={img_src}/>
                     </div>
-                    <div className="col-6">
+                    <div className="col-5">
                         <h4>{work.title}</h4>
                         <h6><i>{work.author_name && work.author_name.map(
                             author => <div>{author}</div>

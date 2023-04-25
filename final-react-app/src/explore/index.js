@@ -16,15 +16,11 @@ const Explore = () => {
 
     const fetchRecommended = async () => {
         if(currentUser){
-            try{
-                const response = await getRecommended();
-                setRecommended(response);
+            var response = await getRecommended();
+            if(response.length === 0){
+               response = await getTrending();
             }
-            catch(e){
-                const response = await getTrending();
-                setRecommended(response);
-            }
-
+            setRecommended(response);
         }
         else{
             const response = await getTrending();

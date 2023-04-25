@@ -11,6 +11,7 @@ const usersSchema = mongoose.Schema({
     extendedBio: {type: String, default: ""},
     joinDate: {type: Date, default: Date.now},
     isAdmin: {type: Boolean, default: false},
+    isBuyer: {type: Boolean, default: false, required: true},
     role: {type: String, default: "user", enum: ["user", "admin", "guest"]},
 }, {collection: 'users'});
 export default usersSchema;

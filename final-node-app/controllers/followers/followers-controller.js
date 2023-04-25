@@ -17,10 +17,27 @@ const followUser = async (req, res) => {
 
 }
 
+const unfollowUser = async (req, res) => {
+    const currentUser = req.session["currentUser"];
+    if(!currentUser){
+        res.sendStatus(403);
+        return;
+    }
+    const followed = req.params.followed;
+    const status = await followersDao.unFollowUser(currentUser._id, followed);
+    res.send(status);
+
+}
+
 const getFollowers = async (req, res) => {
     const followed = req.params.followed;
-    const followers = await followersDao.getFollowers(followed);
-    res.json(followers);
+    try{
+        const followers = await followersDao.getFollowers(followed);
+        res.json(followers);
+    }
+    catch(e){
+        res.sendStatus(404);
+    }
 }
 
 const getFollowing = async (req, res) => {
@@ -31,6 +48,7 @@ const getFollowing = async (req, res) => {
 
 export default (app) => {
     app.post("/api/follow/:followed", followUser)
+    app.delete("/api/follow/:followed", unfollowUser)
     app.get("/api/follow/:followed", getFollowers)
     app.get("/api/follow/following/:follower", getFollowing)
 }

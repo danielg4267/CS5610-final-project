@@ -1,5 +1,4 @@
 import * as reviewsDao from "./reviews-dao.js";
-import * as Dao from "./../users/users-dao.js"
 import {getBookDetailsByID, searchBySubject} from "../openlibrary/openlibrary-service.js";
 
 
@@ -13,31 +12,6 @@ const findReviewsByBookID = async (req, res) => {
     res.json(reviews);
 }
 
-const getRecommendedByUserId = async (req, res) => {
-    const review = await reviewsDao.findRecentReviewByUserID(req.params.uid);
-    const bid = review[0].bid;
-    const bookDetails = await getBookDetailsByID(bid);
-    const subj1 = bookDetails.subjects[0].toLowerCase();
-    const books1 = await searchBySubject(subj1);
-    const subj2 = bookDetails.subjects[1].toLowerCase();
-    const books2 = await searchBySubject(subj2);
-    const subj3 = bookDetails.subjects[2].toLowerCase();
-    const books3 = await searchBySubject(subj3);
-
-    const recObj1 = {};
-    recObj1[subj1] = books1;
-
-    const recObj2 = {};
-    recObj1[subj2] = books2;
-
-    const recObj3 = {};
-    recObj1[subj3] = books3;
-
-    res.json([recObj1, recObj2, recObj3])
-
-
-}
-
 const findRecentReviewByUserID = async (req, res) => {
     const reviews = await reviewsDao.findRecentReviewByUserID(req.params.uid);
     res.json(reviews);
@@ -46,6 +20,10 @@ const findRecentReviewByUserID = async (req, res) => {
 const findRecentReview = async (req, res) => {
     const review = await reviewsDao.findRecentReview();
     res.json(review);
+}
+const findRecentReviewByNEUserID = async (req, res) => {
+    const reviews = await reviewsDao.findRecentReviewByNEUserID(req.params.uid);
+    res.json(reviews);
 }
 
 const findReviewsByUserID = async (req, res) => {
@@ -64,15 +42,49 @@ const createReview = async (req, res) => {
 }
 
 const updateReview = async (req, res) => {
-    const reviewID = req.params.rid;
-    const status = await reviewsDao.updateReview(reviewID, req.body);
-    res.send(status);
+
+    //should probably also check if id of user matches
+    //the review...
+    const currentUser = req.session["currentUser"]
+    if(!currentUser || currentUser.role === "guest"){
+        res.sendStatus(403);
+        return;
+    }
+    //this can be added to the above, clean up later
+    if(currentUser._id !== req.body.uid && !currentUser.isAdmin){
+        res.sendStatus(403);
+        return;
+    }
+    try{
+        const updatedReview = await reviewsDao.updateReview(req.body);
+        res.json(updatedReview);
+    }
+    catch(e){
+        res.sendStatus(404);
+    }
 }
 
 const deleteReview = async (req, res) => {
+    const currentUser = req.session["currentUser"];
+    if(!currentUser || currentUser.role === "guest"){
+        res.sendStatus(403);
+        return;
+    }
+
     const reviewID = req.params.rid;
-    const status = await reviewsDao.deleteReview(reviewID);
-    res.send(status);
+    try{
+        const review = await reviewsDao.findReviewsByReviewID(reviewID);
+        if(!review.uid.equals(currentUser._id) && !currentUser.isAdmin){
+            res.sendStatus(403);
+            return;
+        }
+        const status = await reviewsDao.deleteReview(reviewID);
+        res.send(status);
+    }
+    catch(e){
+        res.sendStatus(404);
+    }
+
 }
 
 export default (app) => {
@@ -80,8 +92,9 @@ export default (app) => {
     app.get('/api/reviews/book/:bid', findReviewsByBookID);
     app.get('/api/reviews/user/:uid', findReviewsByUserID);
     app.get('/api/reviews/recent/user/:uid', findRecentReviewByUserID);
+    app.get('/api/reviews/recent/ne-user/:uid', findRecentReviewByNEUserID);
     app.get('/api/reviews/recent', findRecentReview);
     app.post('/api/reviews', createReview);
-    app.put("/api/reviews/:rid", updateReview);
+    app.put("/api/reviews", updateReview);
     app.delete("/api/reviews/:rid", deleteReview);
 }

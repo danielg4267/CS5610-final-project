@@ -6,6 +6,7 @@ import ReviewsComponent from "../reviews/reviews-component";
 import FollowersComponent from "./followers-component";
 import {followUser, getFollowers, getFollowing} from "../services/follow-services";
 import {findUserByID} from "../services/users-services";
+import SalesComponent from "../sales/sales-component";
 
 const ProfileDetailedSelf = () => {
     const {currentUser} = useSelector((state) => state.userData);
@@ -52,15 +53,28 @@ const ProfileDetailedSelf = () => {
                         <h5>Email</h5>
                         <div>{currentUser.email}</div>
                         <h5>Phone</h5>
-                        <div>{currentUser.phone}</div>
+                        <div className="mb-5">{currentUser.phone}</div>
 
-                        <h2 className="mt-5 mb-3">{currentUser.username}'s Reviews</h2>
+                        {currentUser.isBuyer ?
+                            <>
+                                <h2 className="mt-5 mb-3">{currentUser.username}'s Reviews</h2>
+                                <ReviewsComponent id={currentUser._id} isUserID={true}/>
+                            </> :
+                            <>
+                                <h2>Currently Selling:</h2>
+                                <div className="mb-5">
+                                    <SalesComponent id={currentUser._id} isUserID={true}/>
+                                </div>
+                            </>}
 
-                        <ReviewsComponent id={currentUser._id} isUserID={true}/>
                         <div className="row mt-5">
-                            <div className="col-6">
-                                <FollowersComponent followers={followers} isFollowingList={false}/>
-                            </div>
+                            <>
+                                {followers && followers.length > 0 &&
+                                    <div className="col-6">
+                                        <FollowersComponent followers={followers} isFollowingList={false}/>
+                                    </div>
+                                }
+                            </>
                             <div className="col-6">
                                 <FollowersComponent followers={following} isFollowingList={true}/>
                             </div>

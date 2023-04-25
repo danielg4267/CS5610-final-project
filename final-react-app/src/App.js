@@ -41,15 +41,15 @@ function ReadIt() {
 
                   </div>
                 <div className="m-4 row">
-                    <div className="col-1"></div>
-                  <div className="col-2">
+                    <div className="d-none d-lg-inline col-lg-1"></div>
+                  <div className="d-none d-lg-inline col-lg-2">
                     <Routes>
                         <Route index path="/*" element={<ProfileBasicSelf/>}/>
                         <Route path="/profile/edit" element={<></>}/>
                         <Route path="/profile/:uid" element={<ProfileBasicOther/>}/>
                     </Routes>
                   </div>
-                  <div className="col-5">
+                  <div className="col-md-8 col-lg-5">
                       <Routes>
                           <Route index path="/*" element={<Explore/>}/>
                           <Route path="/login" element={<LoginComponent/>}/>
@@ -61,7 +61,7 @@ function ReadIt() {
                           <Route path="/details/works/:key" element={<ResultDetailed/>}/>
                       </Routes>
                   </div>
-                  <div className="col-3">
+                  <div className="d-none d-md-inline col-md-3">
                       <Routes>
                           <Route path="/*" element={<Highlight/>}/>
                       </Routes>

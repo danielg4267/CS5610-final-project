@@ -7,6 +7,10 @@ export const followUser = async (follow) => {
     }
 }
 
+export const unFollowUser = async (follower, followed) => {
+    return await followersModel.deleteOne({follower:follower, followed: followed})
+}
+
 export const getFollowers = async (followed) => {
     return await followersModel
         .find({followed: followed})

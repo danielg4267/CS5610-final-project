@@ -4,7 +4,6 @@ import {useNavigate, Link} from "react-router-dom"
 import SearchBarComponent from "./search-bar-component";
 import {logoutThunk} from "../services/users-thunks";
 
-
 const Navigation = () => {
     const {currentUser} = useSelector(state => state.userData)
     const [search, setSearch] = useState("");
@@ -15,9 +14,6 @@ const Navigation = () => {
     const searchOpenLib = async () => {
         navigate(`/search/${search}`)
     }
-
-
-
     const logout = () => {
         dispatch(logoutThunk())
     }
@@ -31,7 +27,7 @@ const Navigation = () => {
                          className="float-end rounded-circle"
                          src="/images/logoPic.jpg"/>
                 </Link>
-                <div className="col-2"></div>
+                <div className="d-none d-md-inline col-md-2"></div>
                 <div className="col-3">
 
                     <div className="row">
@@ -54,7 +50,13 @@ const Navigation = () => {
                 </div>
                 <div className="col-3">
                     <div className="float-end">
-                        {currentUser ? <button className="btn btn-outline-danger my-2 my-sm-0" onClick={() => logout()}>Logout</button> :
+                        {currentUser ? <>
+                                <Link to={`/profile`}>
+                                    <img src={`${currentUser.profilePic}`} width={64} height={64}
+                                        className="rounded-circle p-1 me-4 border-secondary"
+                                        style={{"border": "2px solid"}}/>
+                                </Link>
+                                        <button className="btn btn-outline-danger my-2 my-sm-0" onClick={() => logout()}>Logout</button></> :
                                        <button className="btn btn-outline-primary my-2 my-sm-0" onClick={() => navigate(`/login`)}>Login</button>}
 
                     </div>

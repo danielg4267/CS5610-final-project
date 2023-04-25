@@ -8,6 +8,7 @@ import OpenlibraryController from "./controllers/openlibrary/openlibrary-control
 import SessionController from "./controllers/session/session-controller.js";
 import ReviewsController from "./controllers/reviews/reviews-controller.js";
 import FollowersController from "./controllers/followers/followers-controller.js";
+import SalesController from "./controllers/sales/sales-controller.js";
 
 //TO CHANGE LATER
 const DB_CONNECTION_STRING = "mongodb+srv://cs5610-dg-final:cs5610-dg-final@final-project-db.7b118ex.mongodb.net/final-project-db?retryWrites=true&w=majority"
@@ -34,4 +35,5 @@ OpenlibraryController(app);
 SessionController(app);
 ReviewsController(app);
 FollowersController(app);
+SalesController(app);
 app.listen(process.env.PORT || 4000);
