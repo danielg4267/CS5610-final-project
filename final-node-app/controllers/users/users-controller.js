@@ -128,7 +128,9 @@ const updateUserRole = async (req, res) => {
     const toUpdate = req.body;
 
     //updating privileges requires admin status
-    if(!currentUser || (currentUser._id !== uid && !currentUser.isAdmin)){
+    if(!currentUser ||
+        (!currentUser.isAdmin &&
+            (currentUser._id !== uid || toUpdate.isAdmin))){
         res.sendStatus(403);
         return;
     }

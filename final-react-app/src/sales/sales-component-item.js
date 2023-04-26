@@ -1,4 +1,4 @@
-import {useSelector} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import React, {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import {findUserByID} from "../services/users-services";
@@ -9,6 +9,7 @@ import {
     purchaseSale
 } from "../services/sales-services";
 import {getBookDetailsByID} from "../services/openlib-services";
+import {updateUserThunk} from "../services/users-thunks";
 
 const SalesComponentItem = ({sale, editing}) => {
     const {currentUser} = useSelector((state) => state.userData);
@@ -19,6 +20,8 @@ const SalesComponentItem = ({sale, editing}) => {
     const [isValidQuantity, setIsValidQuantity] = useState('is-valid');
     const [isValidPrice, setIsValidPrice] = useState('is-valid');
     const [isEditing, setIsEditing] = useState(editing);
+
+    const dispatch = useDispatch();
 
     const updateQuantity = (input) => {
         setQuantity(input)
@@ -85,6 +88,13 @@ const SalesComponentItem = ({sale, editing}) => {
     }
 
     const buyItem = async () => {
+        //You bought something, now you're a user!
+        if(currentUser.role === "guest"){
+            const result = await dispatch(updateUserThunk({role: "user"}))
+            if(!result){console.log("Couldn't update")}
+        }
+
+
         const response = await purchaseSale(sale._id);
         if(response.quantity){
             setQuantity(response.quantity)

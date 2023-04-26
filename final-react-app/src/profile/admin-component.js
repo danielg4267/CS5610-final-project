@@ -52,11 +52,11 @@ const AdminComponent = ({user}) => {
                     <select onChange={(e) => setIsBuyer(e.target.value === 'true')} className="rounded bg-light text-secondary" name="role" id="role">
                         {isBuyer ?
                             <>
-                            <option selected value="true">Buyer</option>
+                            <option selected value="true">Reader</option>
                             <option value="false">Seller</option>
                             </>:
                             <>
-                            <option value="true">Buyer</option>
+                            <option value="true">Reader</option>
                             <option selected value="false">Seller</option>
                             </>
                         }
@@ -95,7 +95,7 @@ const AdminComponent = ({user}) => {
                 :
                 <>
                     <h5>Role</h5>
-                    <div className="mb-3">{isBuyer ? "Buyer" : "Seller"}</div>
+                    <div className="mb-3">{isBuyer ? "Reader" : "Seller"}</div>
                     <h5>Privilege</h5>
                     <div className="mb-3">{role.toUpperCase()}</div>
                     <>{!isAdmin &&
