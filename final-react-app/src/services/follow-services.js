@@ -1,7 +1,4 @@
 import axios from 'axios';
-import {findRecentReview, findRecentReviewByUserID} from "./reviews-services";
-import {findUserByID} from "./users-services";
-import {getBookDetailsByID} from "./openlib-services";
 const API_BASE = 'http://localhost:4000/api'
 const FOLLOW_API = `${API_BASE}/follow`;
 
@@ -24,6 +21,5 @@ export const getFollowers = async (uid) => {
 
 export const getFollowing = async (uid) => {
     const result = await api.get(`${FOLLOW_API}/following/${uid}`);
-    //console.log(`${FOLLOW_API}/following/${uid}`)
     return result.data;
 }

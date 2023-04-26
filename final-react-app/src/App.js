@@ -27,7 +27,7 @@ const store = configureStore({
   reducer: {userData: usersReducer}});
 
 
-function ReadIt() {
+function ReaddIt() {
   return (
       <div className="bg-light pb-5">
 
@@ -79,4 +79,4 @@ function ReadIt() {
 
 }
 
-export default ReadIt
+export default ReaddIt;

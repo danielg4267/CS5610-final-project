@@ -1,12 +1,9 @@
 import React, {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
-import {useParams, Link, useNavigate} from "react-router-dom";
-import ProfileSideComponent from "./profile-side-component";
+import {useParams, useNavigate} from "react-router-dom";
 import {
     followUser,
     getFollowers,
-    getFollowing,
-    getRecentFollowedReview,
     unfollowUser
 } from "../services/follow-services";
 import {findUserByID} from "../services/users-services.js";
@@ -21,7 +18,6 @@ const ProfileDetailedOther = () => {
     const navigate = useNavigate();
     const [user, setUser] = useState(null);
     const [followers, setFollowers] = useState([]);
-    const [following, setFollowing] = useState(false);
 
     if(currentUser && uid === currentUser._id){
         navigate(`/profile`)
@@ -113,9 +109,3 @@ const ProfileDetailedOther = () => {
 }
 
 export default ProfileDetailedOther;
-
-/*
-<div className="list-group-item">
-                                    <img width={48} height={48} className="rounded-circle" src={follower.profilePic}/>
-                                </div>
- */

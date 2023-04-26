@@ -1,9 +1,7 @@
-import {loginThunk} from "../services/users-thunks";
-import {Link, useParams} from "react-router-dom";
+import {Link} from "react-router-dom";
 import React, {useEffect, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {getBookDetailsByID, getRecommended, getTrending, searchByTitle} from "../services/openlib-services";
-import {findRecentReviewByUserID} from "../services/reviews-services";
+import {useSelector} from "react-redux";
+import {getRecommended, getTrending} from "../services/openlib-services";
 
 
 const COVER_SOURCE = "https://covers.openlibrary.org/b/id"
@@ -12,7 +10,6 @@ const Explore = () => {
     const {currentUser} = useSelector(state => state.userData)
     const [recommended, setRecommended] = useState([]);
     const [activeRec, setActiveRec] = useState(null);
-    const dispatch = useDispatch();
 
     const fetchRecommended = async () => {
         if(currentUser){
@@ -86,10 +83,3 @@ const Explore = () => {
 }
 
 export default Explore;
-
-/*
-                        {details.covers ? details.covers.map(cover =>
-                            <td>
-                                <img src={`${COVER_SOURCE}/${cover}-M.jpg`}/>
-                            </td>) : <td><img src="https://openlibrary.org/images/icons/avatar_book.png"/></td>}
- */

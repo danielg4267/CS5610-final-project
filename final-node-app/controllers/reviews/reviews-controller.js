@@ -1,5 +1,4 @@
 import * as reviewsDao from "./reviews-dao.js";
-import {getBookDetailsByID, searchBySubject} from "../openlibrary/openlibrary-service.js";
 
 
 const findAllReviews = async (req, res) => {
@@ -43,14 +42,12 @@ const createReview = async (req, res) => {
 
 const updateReview = async (req, res) => {
 
-    //should probably also check if id of user matches
-    //the review...
     const currentUser = req.session["currentUser"]
     if(!currentUser || currentUser.role === "guest"){
         res.sendStatus(403);
         return;
     }
-    //this can be added to the above, clean up later
+    //todo: this can be added to the above, clean up later
     if(currentUser._id !== req.body.uid && !currentUser.isAdmin){
         res.sendStatus(403);
         return;

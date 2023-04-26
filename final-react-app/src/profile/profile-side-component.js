@@ -55,5 +55,3 @@ const ProfileSideComponent = ({user}) => {
     }
 };
 export default ProfileSideComponent;
-//new Date(user.joinDate.slice(0, 10)).toLocaleDateString('en-us', {year:"numeric", month:"short", day:"numeric"})
-//new Date(user.joinDate.slice(0, 10)).toLocaleDateString('en-us', {year:"numeric", month:"short", day:"numeric"})

@@ -2,7 +2,6 @@ import React, {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {getHighlightedReview} from "../services/reviews-services";
-import ReviewItemComponent from "../reviews/review-item-component";
 
 const COVER_SOURCE = "https://covers.openlibrary.org/b/id"
 

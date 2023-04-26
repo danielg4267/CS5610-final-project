@@ -1,10 +1,8 @@
-import {useSelector} from "react-redux";
 import React, {useState, useEffect} from "react";
 import {updateUserPrivileges} from "../services/users-services";
 
 const AdminComponent = ({user}) => {
 
-    const {currentUser} = useSelector((state) => state.userData);
     const [role, setRole] = useState(user.role);
     const [isBuyer, setIsBuyer] = useState(user.isBuyer);
     const [isAdmin, setIsAdmin] = useState(user.isAdmin);

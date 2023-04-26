@@ -1,4 +1,4 @@
-import {useParams, Link, useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 const FollowersComponent = ({followers, isFollowingList}) => {
     return(
         <>

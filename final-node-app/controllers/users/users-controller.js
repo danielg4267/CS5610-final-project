@@ -13,7 +13,6 @@ const register = async (req, res) => {
         return;
     }
     try{
-        //console.log(req.body)
         const newUser = await usersDao
             .createUser(req.body);
         req.session["currentUser"] = newUser;

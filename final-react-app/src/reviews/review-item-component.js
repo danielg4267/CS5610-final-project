@@ -104,5 +104,3 @@ const ReviewItemComponent = ({review, isUserList}) => {
 }
 
 export default ReviewItemComponent;
-
-//(is this id of currentuser and user is user) or user is admin

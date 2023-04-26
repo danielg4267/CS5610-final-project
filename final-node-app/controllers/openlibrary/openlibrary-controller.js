@@ -57,7 +57,6 @@ const searchRecommended = async (req, res) => {
         recommended = [...recommended, recObj];
         i++;
     }
-    //console.log(recommended);
     res.json(recommended)
 
 
@@ -84,7 +83,6 @@ const searchTrending = async (req, res) => {
         recommended = [...recommended, recObj];
         i++;
     }
-    //console.log(recommended);
     res.json(recommended)
 
 

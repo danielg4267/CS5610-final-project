@@ -1,6 +1,6 @@
 import {loginThunk} from "../services/users-thunks";
-import React, {useEffect, useState} from "react";
-import {Link, useNavigate} from "react-router-dom";
+import React, {useState} from "react";
+import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 
 
@@ -8,7 +8,6 @@ const LoginComponent = () => {
     const {currentUser} = useSelector((state) => state.userData);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const navigate = useNavigate();
     const dispatch = useDispatch();
     const login = (username, password) => {
         dispatch(loginThunk({username, password}))
@@ -78,12 +77,6 @@ const LoginComponent = () => {
 
 
         )
-
-
-
-
-
-
 }
 
 export default LoginComponent;

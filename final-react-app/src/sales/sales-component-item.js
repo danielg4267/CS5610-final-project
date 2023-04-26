@@ -3,8 +3,6 @@ import React, {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import {findUserByID} from "../services/users-services";
 import {
-    findSalesByBookID,
-    findSalesByUserID,
     createSale,
     updateSale,
     deleteSale,
@@ -110,7 +108,7 @@ const SalesComponentItem = ({sale, editing}) => {
     useEffect(() => {
         fetchUser();
         fetchBook();
-    }, [])
+    }, [sale])
 
     return(
         <tr>

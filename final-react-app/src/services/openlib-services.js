@@ -10,14 +10,12 @@ export const searchByTitle = async (title) => {
 }
 
 export const getBookDetailsByID = async (bid) => {
-    //console.log(bid);
     const response = await api.get(`${OPENLIB_API}/details/${bid}`)
     const results = response.data;
     return results;
 }
 
 export const getAuthorDetailsByID = async (aid) => {
-    //console.log(`${OPENLIB_API}/details/author/${aid}`)
     const response = await api.get(`${OPENLIB_API}/details/author/${aid}`)
     const results = response.data;
     return results;

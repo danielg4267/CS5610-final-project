@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {getAuthorDetailsByID, getBookDetailsByID, searchByTitle} from "../services/openlib-services.js";
+import {getAuthorDetailsByID} from "../services/openlib-services.js";
 
 const AuthorComponent = (authorObj) => {
 

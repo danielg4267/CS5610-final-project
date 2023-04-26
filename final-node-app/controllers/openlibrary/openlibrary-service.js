@@ -15,7 +15,7 @@ export const searchByTitle = async (title) =>{
 export const searchBySubject = async (subject) =>{
     const response = await axios.get(
         `${OL_SUBJECTS_API}/${subject}`)
-    return response.data["works"].slice(0,10)//.docs.slice(0, 10);
+    return response.data["works"].slice(0,10)
 };
 export const searchByAuthor = async (author) =>{
     const response = await axios.get(

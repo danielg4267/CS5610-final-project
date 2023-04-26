@@ -1,6 +1,6 @@
 import {useParams, useNavigate} from "react-router-dom";
-import {getAuthorDetailsByID, getBookDetailsByID} from "../services/openlib-services";
-import {createReview, findReviewsByBookID, findReviewsByUserID} from "../services/reviews-services";
+import {getBookDetailsByID} from "../services/openlib-services";
+import {createReview} from "../services/reviews-services";
 import {useSelector} from "react-redux"
 import React, {useEffect, useState} from "react";
 import AuthorComponent from "./author-component";
@@ -15,7 +15,6 @@ const ResultDetailed = () => {
     const {currentUser} = useSelector(state=> state.userData)
     const [review, setReview] = useState([])
     const [details, setDetails] = useState({});
-    const [postDate, setPostDate] = useState(null);
     const [newReview, setNewReview] = useState(null);
 
     const navigate = useNavigate();
@@ -97,16 +96,3 @@ const ResultDetailed = () => {
 }
 
 export default ResultDetailed;
-
-//<button className="btn btn-secondary">{subject}</button>
-
-/*
-{
-                    details.authors.map(author =>
-                        <li>
-                            {author["author"]["key"]}
-                        </li>
-
-                    )
-                }
- */

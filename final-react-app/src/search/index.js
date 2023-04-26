@@ -1,12 +1,7 @@
-//https://openlibrary.org/search.json?q=harry%20potter&fields=subject
-//https://covers.openlibrary.org/b/id/10521270-L.jpg
-
-import {Link, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import {searchByTitle} from "../services/openlib-services";
 import ResultBasic from "./result-basic";
-
-const COVER_SOURCE = "https://covers.openlibrary.org/b/id"
 
 const Search = () => {
     const {search} = useParams();

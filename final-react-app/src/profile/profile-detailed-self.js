@@ -1,11 +1,9 @@
 import {useSelector} from "react-redux";
 import React, {useEffect, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
-import {findReviewsByBookID} from "../services/reviews-services";
 import ReviewsComponent from "../reviews/reviews-component";
 import FollowersComponent from "./followers-component";
-import {followUser, getFollowers, getFollowing} from "../services/follow-services";
-import {findUserByID} from "../services/users-services";
+import {getFollowers, getFollowing} from "../services/follow-services";
 import SalesComponent from "../sales/sales-component";
 
 const ProfileDetailedSelf = () => {
@@ -28,7 +26,7 @@ const ProfileDetailedSelf = () => {
     useEffect(() => {
         fetchFollowers();
         fetchFollowing();
-    }, []);
+    }, [currentUser]);
 
     if(currentUser){
         return(
@@ -75,9 +73,11 @@ const ProfileDetailedSelf = () => {
                                     </div>
                                 }
                             </>
-                            <div className="col-6">
-                                <FollowersComponent followers={following} isFollowingList={true}/>
-                            </div>
+                            {following && following.length > 0 &&
+                                <div className="col-6">
+                                    <FollowersComponent followers={following} isFollowingList={true}/>
+                                </div>
+                            }
                         </div>
 
 
@@ -101,25 +101,3 @@ const ProfileDetailedSelf = () => {
 }
 
 export default ProfileDetailedSelf;
-
-/*
-
-                <div className="list-group-item flex-column align-items-start">
-                        <div className="row">
-                            <div className="col-2">
-                                <img src="/images/logoPic.png" width={96} height={100}/>
-                            </div>
-                            <div className="col-10">
-                                <div className="d-flex w-100 justify-content-between">
-
-                                    <h5 className="mb-1">Username's review of BookTitle</h5>
-                                    <small>Apr 15, 2023</small>
-                                </div>
-                                <p className="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget
-                                    risus varius blandit.</p>
-                                <small>Donec id elit non mi porta.</small>
-                            </div>
-
-                        </div>
-                    </div>
- */

@@ -74,6 +74,7 @@ export const getRecentFollowedReview = async (following) => {
         const review = await findRecentReviewByUserID(randomFollowed.followed._id);
         review.review = review[0];
         review.user = randomFollowed.followed;
+        if(review.review && review.user){return review;}
 
     }
     if(result.length < 1 || !review.review){
@@ -83,9 +84,8 @@ export const getRecentFollowedReview = async (following) => {
         review.review = reviewData;
         //same structure as followed object, obv not rly necessary since it has all this info, but for consistency's sake
         review.user = {_id: userData._id, username: userData.username, profilePic: userData.profilePic}
+        if(review.review && review.user){return review;}
+        else{return null;}
+
     }
-
-    if(review.review && review.user){return review;}
-    else{return null;}
-
 }

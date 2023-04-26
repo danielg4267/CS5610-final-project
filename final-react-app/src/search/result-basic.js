@@ -7,7 +7,7 @@ const resultBasic = ({work}) => {
     if(work.cover_i){
         img_src = `${COVER_SOURCE}/${work.cover_i}-M.jpg`
     }
-    //console.log(work.cover_i);
+
     if(!work.author_name || !work.first_publish_year || !work.title){
         return(<></>)
     }

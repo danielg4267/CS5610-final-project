@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {loginThunk, registerThunk, updateUserThunk} from "../services/users-thunks";
-import {register} from "../services/users-services";
+import {registerThunk, updateUserThunk} from "../services/users-thunks";
 import {useNavigate} from "react-router-dom";
 
 const EditProfileDetailsComponent = () => {
@@ -77,7 +76,6 @@ const EditProfileDetailsComponent = () => {
     }
 
     const updateProfilePic = (input) => {
-        console.log(input.split("\\"));
         const address = input.split("\\")
         const image = address[address.length-1];
         const imagePath = "/images/" + image;
@@ -137,7 +135,9 @@ const EditProfileDetailsComponent = () => {
                 extendedBio: extendedBio,
                 profilePic: profilePic,
                 coverPic: coverPic,
-                isBuyer: buyer
+                isBuyer: buyer,
+                isAdmin: false,
+                role: "guest"
             }
             const response = await dispatch(registerThunk(user))
 

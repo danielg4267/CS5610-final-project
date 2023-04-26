@@ -16,9 +16,6 @@ export const updateUserThunk = createAsyncThunk(
         return user;
     }
 );
-
-
-
 export const logoutThunk = createAsyncThunk(
     "user/logout", async () => {
 
@@ -30,13 +27,6 @@ export const registerThunk = createAsyncThunk(
     "user/register", async (credentials) => {
         const newUser = await service.register(credentials);
         return newUser;
-    }
-);
-
-export const findUserByIDThunk = createAsyncThunk(
-    "user/findUser", async (uid) => {
-        const user = await service.findUserByID(uid);
-        return user;
     }
 );
 

@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
-    findUserByIDThunk,
     loginThunk,
     logoutThunk,
     profileThunk,

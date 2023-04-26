@@ -21,14 +21,14 @@ export const findSalesByUserID = async (uid) => {
 
 export const findSalesByBookID = async (bid) => {
 
-    //console.log(`${SALES_API}/book/${bid}`)
+
     const response = await api.get(`${SALES_API}/book/${bid}`);
     const sales = response.data;
     return sales;
 }
 
 export const createSale = async (sale) => {
-    console.log(sale);
+
     const response = await api.post(`${SALES_API}`, sale);
     return response.data;
 }
